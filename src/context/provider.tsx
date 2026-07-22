@@ -48,6 +48,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       setData(fetchedData);
     } catch (error) {
       setIsPCon(false);
+      alert("PC is not connected!");
       console.error("Failed to fetch data:", error);
     }
   };

@@ -10,7 +10,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useApp } from "@/context/provider";
 import sendSystemAction from "@/hooks/systemActions";
-import wol from "react-native-wol";
 const NavBar = ({ title = "Title" }: { title?: string }) => {
   const {
     adminKey,
@@ -123,9 +122,7 @@ const NavBar = ({ title = "Title" }: { title?: string }) => {
 
   const handleShutdown = () => {
     if (!isPCon) {
-      // Send Wake on LAN packet
-      wol.wake("30:68:93:71:D0:68", "192.168.31.255");
-      alert("Wake packet sent!");
+      alert("PC is offline!");
       return;
     }
 
