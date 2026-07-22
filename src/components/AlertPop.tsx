@@ -50,6 +50,7 @@ const AlertPop = () => {
     let data: any;
     if (currentAction === "shutdown") {
       data = await sendSystemAction({
+        cancel: false,
         shutdown: true,
         restart: false,
         fw: false,
@@ -59,6 +60,7 @@ const AlertPop = () => {
     }
     if (currentAction === "firmware") {
       data = await sendSystemAction({
+        cancel: false,
         restart: true,
         shutdown: false,
         fw: true,

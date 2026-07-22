@@ -1,37 +1,13 @@
-type Shutdown = {
-  shutdown?: boolean;
-  restart?: false;
-  fw?: false;
-  force?: boolean;
-  timing?: number;
-  key: string;
-};
-type Firmware = {
-  shutdown?: false;
-  restart: true;
-  fw: true;
-  force?: false;
-  timing?: number;
-  key: string;
-};
-type Cancel = {
-  cancel: true;
-  shutdown?: false;
-  restart?: false;
-  fw?: false;
-  force?: false;
-  timing?: undefined;
-  key: string;
-};
+import { Firmware, Shutdown, Cancel } from "@/types/types";
 type SystemActionProp = Firmware | Shutdown | Cancel;
 
 export default async function sendSystemAction({
+  cancel,
   shutdown,
   restart,
   fw,
   force,
   timing,
-  cancel,
   key,
 }: SystemActionProp) {
   try {

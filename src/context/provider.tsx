@@ -1,35 +1,82 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-interface AppContextType {
-  adminKey: string;
-  setAdminKey: (key: string) => void;
-  showAlert: boolean;
-  setShowAlert: (show: boolean) => void;
-  alertType: "shutdown" | "firmware" | null;
-  setAlertType: (type: "shutdown" | "firmware" | null) => void;
-  isModalVisible: boolean;
-  setIsModalVisible: (show: boolean) => void;
-  pendingAction: "shutdown" | "firmware" | null;
-  setPendingAction: (action: "shutdown" | "firmware" | null) => void;
-  shutdownTimer: number | null;
-  setShutdownTimer: (val: number | null) => void;
-  firmwareTimer: number | null;
-  setFirmwareTimer: (val: number | null) => void;
-}
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { SystemDataType, AppContextType } from "@/types/types";
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
+  const [isPCon, setIsPCon] = useState(false);
+  const [data, setData] = useState<SystemDataType>({
+    cpu_usage: 0,
+    ram_usage: 0,
+    disk_usage: 0,
+    net_up_mbps: 0,
+    net_down_mbps: 0,
+    uptime_hours: 0,
+    cpu_temp: 0,
+    cpu_load: 0,
+    cpu_power: 0,
+    cpu_clock_ghz: 0,
+    cpu_voltage: 0,
+    gpu_temp: 0,
+    gpu_hotspot: 0,
+    gpu_load: 0,
+    gpu_power: 0,
+    gpu_vram_used: 0,
+    gpu_vram_total: 0,
+    gpu_fan_rpm: 0,
+    gpu_fan_pct: 0,
+    cpu_fan_rpm: 0,
+    cpu_fan_pct: 0,
+    ram_used_gb: 0,
+    ram_avail_gb: 0,
+    nvme_temp: 0,
+    nvme_used_pct: 0,
+    net_up_str: "0",
+    net_down_str: "0",
+  });
+  const getData = async () => {
+    try {
+      const res: any = await fetch("http://192.168.31.116:5000/data");
+      const fetchedData: any = await res.json();
+      setIsPCon(true);
+      setData(fetchedData);
+    } catch (error) {
+      setIsPCon(false);
+      console.error("Failed to fetch data:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch immediately on mount
+    getData();
+
+    // Then poll every 2 seconds
+    const interval = setInterval(() => {
+      getData();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
   const [adminKey, setAdminKey] = useState<string>(
     process.env.EXPO_PUBLIC_ADMIN_KEY || "",
   );
   const [showAlert, setShowAlert] = useState<boolean>(false);
-  const [alertType, setAlertType] = useState<"shutdown" | "firmware" | null>(null);
+  const [alertType, setAlertType] = useState<"shutdown" | "firmware" | null>(
+    null,
+  );
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [pendingAction, setPendingAction] = useState<
     "shutdown" | "firmware" | null
   >(null);
   const [shutdownTimer, setShutdownTimer] = useState<number | null>(null);
   const [firmwareTimer, setFirmwareTimer] = useState<number | null>(null);
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
   return (
     <AppContext.Provider
       value={{
@@ -47,6 +94,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         setShutdownTimer,
         firmwareTimer,
         setFirmwareTimer,
+        data,
+        setData,
+        isFullScreen,
+        setIsFullScreen,
+        isPCon,
+        setIsPCon,
       }}
     >
       {children}

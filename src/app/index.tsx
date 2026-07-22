@@ -1,18 +1,37 @@
-import NavBar from "@/components/NavBar";
-import { StyleSheet, View } from "react-native";
+import CPU from "@/components/CPU";
+import GPU from "@/components/GPU";
+import RAM from "@/components/RAM";
+import Network from "@/components/Network";
+import Storage from "@/components/Storage";
+import SystemInfo from "@/components/SystemInfo";
+import { StyleSheet, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      
-    </View>
+    <SafeAreaView style={styles.safeArea} edges={["bottom", "left", "right"]}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <SystemInfo />
+        <CPU />
+        <GPU />
+        <RAM />
+        <Storage />
+        <Network />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    justifyContent: "center",
+    backgroundColor: "#050505",
+  },
+  container: {
+    flexGrow: 1,
     alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    gap: 15,
   },
 });
