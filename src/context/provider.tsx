@@ -63,7 +63,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [data]);
   const [adminKey, setAdminKey] = useState<string>(
     process.env.EXPO_PUBLIC_ADMIN_KEY || "",
   );

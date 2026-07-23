@@ -115,7 +115,11 @@ const NavBar = ({ title = "Title" }: { title?: string }) => {
   };
 
   const handleCancelAction = async (type: "shutdown" | "firmware") => {
-    await sendSystemAction({ cancel: true, key: adminKey });
+    await sendSystemAction({
+      cancel: true,
+      key: adminKey,
+      isAdministrator: false,
+    });
     if (type === "shutdown") setShutdownTimer(null);
     if (type === "firmware") setFirmwareTimer(null);
   };
@@ -135,6 +139,11 @@ const NavBar = ({ title = "Title" }: { title?: string }) => {
   };
 
   const handleFirmware = () => {
+    if (!isPCon) {
+      alert("PC is offline!");
+      return;
+    }
+
     if (firmwareTimer !== null) {
       handleCancelAction("firmware");
     } else {

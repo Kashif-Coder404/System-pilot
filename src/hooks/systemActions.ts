@@ -9,6 +9,7 @@ export default async function sendSystemAction({
   force,
   timing,
   key,
+  isAdministrator,
 }: SystemActionProp) {
   try {
     let cmd = "shutdown";
@@ -21,10 +22,15 @@ export default async function sendSystemAction({
       if (restart) cmd += " /r";
       if (fw) cmd += " /fw";
       if (force) cmd += " /f";
+      
 
       // Append the timing parameter if provided
       if (timing !== undefined) {
         cmd += ` /t ${timing}`;
+      }
+      if (isAdministrator) {
+        cmd = `powershell -Command "Start-Process cmd -ArgumentList '/c ${cmd}' -Verb runAs"`;
+        console.log("ADMIN");
       }
     }
     console.log("COMMAND", cmd);

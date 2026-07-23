@@ -65,6 +65,7 @@ export type Shutdown = {
   force?: boolean;
   timing?: number;
   key: string;
+  isAdministrator: boolean;
 };
 export type Firmware = {
   cancel?: false;
@@ -74,6 +75,7 @@ export type Firmware = {
   force?: false;
   timing?: number;
   key: string;
+  isAdministrator: boolean;
 };
 export type Cancel = {
   cancel: true;
@@ -83,6 +85,7 @@ export type Cancel = {
   force?: false;
   timing?: undefined;
   key: string;
+  isAdministrator: boolean;
 };
 
 //Optional (currently not using it!)

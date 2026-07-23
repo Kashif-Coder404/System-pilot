@@ -22,7 +22,7 @@ const AlertPop = () => {
 
   useEffect(() => {
     if (isModalVisible) {
-      setTimerInput(pendingAction === "shutdown" ? "5" : "0");
+      setTimerInput(pendingAction === "shutdown" ? "10" : "5");
     }
   }, [isModalVisible, pendingAction]);
 
@@ -56,6 +56,7 @@ const AlertPop = () => {
         fw: false,
         timing,
         key: adminKey,
+        isAdministrator: false,
       });
     }
     if (currentAction === "firmware") {
@@ -66,6 +67,7 @@ const AlertPop = () => {
         fw: true,
         timing,
         key: adminKey,
+        isAdministrator: true,
       });
     }
 
