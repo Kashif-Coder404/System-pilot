@@ -6,11 +6,14 @@ import {
   useState,
 } from "react";
 import { SystemDataType, AppContextType } from "@/types/types";
+import { useSafeAreaFrame } from "react-native-safe-area-context";
+
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isPCon, setIsPCon] = useState(false);
+  const [isRefreshed, setIsRefreshed] = useState(false);
   const [data, setData] = useState<SystemDataType>({
     cpu_usage: 0,
     ram_usage: 0,
@@ -40,30 +43,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     net_up_str: "0",
     net_down_str: "0",
   });
-  const getData = async () => {
-    try {
-      const res: any = await fetch("http://192.168.31.116:5000/data");
-      const fetchedData: any = await res.json();
-      setIsPCon(true);
-      setData(fetchedData);
-    } catch (error) {
-      setIsPCon(false);
-      alert("PC is not connected!");
-      console.error("Failed to fetch data:", error);
-    }
-  };
 
-  useEffect(() => {
-    // Fetch immediately on mount
-    getData();
-
-    // Then poll every 2 seconds
-    const interval = setInterval(() => {
-      getData();
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [data]);
   const [adminKey, setAdminKey] = useState<string>(
     process.env.EXPO_PUBLIC_ADMIN_KEY || "",
   );
@@ -101,6 +81,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         setIsFullScreen,
         isPCon,
         setIsPCon,
+        isRefreshed,
+        setIsRefreshed,
       }}
     >
       {children}

@@ -22,6 +22,8 @@ export interface AppContextType {
   setData: Dispatch<SetStateAction<SystemDataType>>;
   isFullScreen: boolean;
   setIsFullScreen: Dispatch<SetStateAction<boolean>>;
+  isRefreshed: boolean;
+  setIsRefreshed: Dispatch<SetStateAction<boolean>>;
 }
 export type SystemDataType = OthersInfoType & GPU & CPU;
 interface OthersInfoType {

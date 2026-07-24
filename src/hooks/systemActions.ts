@@ -33,8 +33,6 @@ export default async function sendSystemAction({
         console.log("ADMIN");
       }
     }
-    console.log("COMMAND", cmd);
-    console.log("ADMINKEY: ", key);
     const res = await fetch("http://192.168.31.116:5000/sysAct", {
       method: "POST",
       headers: {

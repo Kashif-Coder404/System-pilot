@@ -171,9 +171,11 @@ const StatItem = ({ label, value, unit, icon, color, animation }: any) => {
 
 const getTempColor = (temp: number) => {
   if (!temp) return "#94A3B8";
-  if (temp < 65) return "#4ADE80";
-  if (temp < 80) return "#FB923C";
-  return "#F87171";
+  if (temp < 50) return "#4ADE80";
+  if (temp < 60) return "#FB923C";
+  if (temp < 70) return "#F87171";
+  if (temp < 80) return "#f52424ff";
+  return "#da0303ff";
 };
 
 const CPU = () => {
