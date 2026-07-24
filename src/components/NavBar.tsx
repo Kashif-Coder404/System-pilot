@@ -24,6 +24,7 @@ const NavBar = ({ title = "Title" }: { title?: string }) => {
     data,
     isFullScreen,
     isPCon,
+    IPAddress,
   } = useApp();
 
   if (isFullScreen) return null;
@@ -119,6 +120,7 @@ const NavBar = ({ title = "Title" }: { title?: string }) => {
       cancel: true,
       key: adminKey,
       isAdministrator: false,
+      ipAddress: IPAddress,
     });
     if (type === "shutdown") setShutdownTimer(null);
     if (type === "firmware") setFirmwareTimer(null);

@@ -2,6 +2,10 @@ import GPU from "@/components/GPU";
 import { Dispatch, SetStateAction } from "react";
 
 export interface AppContextType {
+  IPAddress: string;
+  setIPAddress: (ip: string) => void;
+  isSettingVisible: boolean;
+  setIsSettingVisible: (show: boolean) => void;
   adminKey: string;
   setAdminKey: (key: string) => void;
   showAlert: boolean;
@@ -68,6 +72,7 @@ export type Shutdown = {
   timing?: number;
   key: string;
   isAdministrator: boolean;
+  ipAddress: string;
 };
 export type Firmware = {
   cancel?: false;
@@ -78,6 +83,7 @@ export type Firmware = {
   timing?: number;
   key: string;
   isAdministrator: boolean;
+  ipAddress: string;
 };
 export type Cancel = {
   cancel: true;
@@ -88,6 +94,7 @@ export type Cancel = {
   timing?: undefined;
   key: string;
   isAdministrator: boolean;
+  ipAddress: string;
 };
 
 //Optional (currently not using it!)

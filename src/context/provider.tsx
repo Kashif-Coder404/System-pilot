@@ -6,14 +6,14 @@ import {
   useState,
 } from "react";
 import { SystemDataType, AppContextType } from "@/types/types";
-import { useSafeAreaFrame } from "react-native-safe-area-context";
-
+import { getIP } from "@/hooks/IPAdd";
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [isPCon, setIsPCon] = useState(false);
-  const [isRefreshed, setIsRefreshed] = useState(false);
+  useEffect(() => {
+    getIP("IP_ADDRESS").then((ip: any) => setIPAddress(ip));
+  }, []);
   const [data, setData] = useState<SystemDataType>({
     cpu_usage: 0,
     ram_usage: 0,
@@ -43,6 +43,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     net_up_str: "0",
     net_down_str: "0",
   });
+  const [isSettingVisible, setIsSettingVisible] = useState(false);
+  const [isPCon, setIsPCon] = useState(false);
+  const [isRefreshed, setIsRefreshed] = useState(false);
+  const [IPAddress, setIPAddress] = useState<string>("");
 
   const [adminKey, setAdminKey] = useState<string>(
     process.env.EXPO_PUBLIC_ADMIN_KEY || "",
@@ -83,6 +87,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         setIsPCon,
         isRefreshed,
         setIsRefreshed,
+        isSettingVisible,
+        setIsSettingVisible,
+        IPAddress,
+        setIPAddress,
       }}
     >
       {children}

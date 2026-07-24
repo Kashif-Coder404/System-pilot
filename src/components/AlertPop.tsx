@@ -16,6 +16,7 @@ const AlertPop = () => {
     setAlertType,
     setShutdownTimer,
     setFirmwareTimer,
+    IPAddress,
   } = useApp();
 
   const [timerInput, setTimerInput] = useState<string>("");
@@ -57,6 +58,7 @@ const AlertPop = () => {
         timing,
         key: adminKey,
         isAdministrator: false,
+        ipAddress: IPAddress,
       });
     }
     if (currentAction === "firmware") {
@@ -68,6 +70,7 @@ const AlertPop = () => {
         timing,
         key: adminKey,
         isAdministrator: true,
+        ipAddress: IPAddress,
       });
     }
 

@@ -10,6 +10,7 @@ export default async function sendSystemAction({
   timing,
   key,
   isAdministrator,
+  ipAddress,
 }: SystemActionProp) {
   try {
     let cmd = "shutdown";
@@ -22,7 +23,6 @@ export default async function sendSystemAction({
       if (restart) cmd += " /r";
       if (fw) cmd += " /fw";
       if (force) cmd += " /f";
-      
 
       // Append the timing parameter if provided
       if (timing !== undefined) {
@@ -33,7 +33,7 @@ export default async function sendSystemAction({
         console.log("ADMIN");
       }
     }
-    const res = await fetch("http://192.168.31.116:5000/sysAct", {
+    const res = await fetch(`http://${ipAddress}:5000/sysAct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

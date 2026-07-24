@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useApp } from "@/context/provider";
 import { useGetData } from "@/hooks/getData";
 import { useEffect, useCallback } from "react";
+import SettingsPanel from "@/components/SettingsPanel";
 
 export default function HomeScreen() {
   const { isRefreshed, setIsRefreshed } = useApp();
@@ -16,7 +17,7 @@ export default function HomeScreen() {
 
   const onRefresh = useCallback(async () => {
     setIsRefreshed(true);
-    await fetchSystemData();
+    await fetchSystemData(true);
     setIsRefreshed(false);
   }, [fetchSystemData, setIsRefreshed]);
 
@@ -42,6 +43,7 @@ export default function HomeScreen() {
           />
         }
       >
+        <SettingsPanel />
         <SystemInfo />
         <CPU />
         <GPU />
