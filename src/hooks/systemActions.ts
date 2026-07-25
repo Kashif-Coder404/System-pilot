@@ -33,7 +33,7 @@ export default async function sendSystemAction({
         console.log("ADMIN");
       }
     }
-    const res = await fetch(`http://${ipAddress}:5000/sysAct`, {
+    const res = await fetch(`http://${ipAddress}:3000/sysAct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

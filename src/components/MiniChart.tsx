@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
+import { useApp } from "@/context/provider";
 import Svg, {
   Path,
   Line,
@@ -28,6 +29,7 @@ const MiniChart = ({
 }) => {
   const [history, setHistory] = useState<number[]>([]);
   const [allTimeMax, setAllTimeMax] = useState<number>(0);
+  const { data } = useApp();
 
   useEffect(() => {
     if (dataValue === undefined || dataValue === null) return;
@@ -40,7 +42,7 @@ const MiniChart = ({
       return newHistory;
     });
     setAllTimeMax((prev) => Math.max(prev, dataValue));
-  }, [dataValue]);
+  }, [data]);
 
   const getPathData = () => {
     if (history.length === 0) return { linePath: "", areaPath: "" };

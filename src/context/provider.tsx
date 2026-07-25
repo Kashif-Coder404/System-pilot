@@ -42,6 +42,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     nvme_used_pct: 0,
     net_up_str: "0",
     net_down_str: "0",
+    motherboard_system_temp: 0,
+    motherboard_vrm_temp: 0,
+    motherboard_pch_temp: 0,
+    system_fans: [],
+    gpu_clock_mhz: 0,
+    gpu_memory_clock_mhz: 0,
+    gpu_voltage: 0,
+    disks: [],
   });
   const [isSettingVisible, setIsSettingVisible] = useState(false);
   const [isPCon, setIsPCon] = useState(false);

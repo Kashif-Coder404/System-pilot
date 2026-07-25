@@ -1,36 +1,36 @@
 import { useApp } from "@/context/provider";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef } from "react";
 
 export const useGetData = () => {
   const { setIsPCon, setData, IPAddress } = useApp();
-  const [isAlerted, setIsAlerted] = useState(false);
+  const isAlerted = useRef(false);
   
   const fetchSystemData = useCallback(async (manualRefresh = false) => {
-    const url = `http://${IPAddress}:5000/data`;
+    const url = `http://${IPAddress}:3000/api/system`;
     if (!IPAddress) {
       setIsPCon(false);
       return;
     }
     
     if (manualRefresh) {
-      setIsAlerted(false);
+      isAlerted.current = false;
     }
 
     try {
       const res = await fetch(url);
       const fetchedData = await res.json();
       setIsPCon(true);
-      setData(fetchedData);
-
-      if (!fetchedData["LHM ERROR"]) {
-        if (!isAlerted || manualRefresh) {
-          alert(`LHM ERROR: \nPlease run the LibreHardwareMonitor.exe on PC!`);
-          console.log("Error From LHM: ", fetchedData.lhm_error_msg);
-          setIsAlerted(true);
+      
+      if (fetchedData.error) {
+        if (!isAlerted.current || manualRefresh) {
+          alert(`ERROR: \nPlease run the LibreHardwareMonitor.exe on PC!\nDetails: ${fetchedData.error}`);
+          console.log("Error From LHM: ", fetchedData.error);
+          isAlerted.current = true;
         }
       } else {
-        setIsAlerted(false);
+        setData(fetchedData);
+        isAlerted.current = false;
       }
     } catch (error: any) {
       setIsPCon(false);

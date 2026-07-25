@@ -42,6 +42,24 @@ interface OthersInfoType {
   nvme_used_pct: number;
   net_up_str: string | null;
   net_down_str: string | null;
+  motherboard_system_temp: number;
+  motherboard_vrm_temp: number;
+  motherboard_pch_temp: number;
+  system_fans: { name: string, rpm: number, pct: number }[];
+  gpu_clock_mhz: number;
+  gpu_memory_clock_mhz: number;
+  gpu_voltage: number;
+  disks: DiskInfo[];
+}
+
+export interface DiskInfo {
+  name: string;
+  temp: number;
+  used_pct: number;
+  read_rate: string;
+  write_rate: string;
+  total_space: string;
+  free_space: string;
 }
 interface CPU {
   cpu_usage: number;

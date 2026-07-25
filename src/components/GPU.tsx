@@ -250,8 +250,8 @@ const GPU = () => {
       <View style={styles.vramContainer}>
         <Text style={styles.vramLabel}>VRAM Used</Text>
         <Text style={styles.vramValue}>
-          {data.gpu_vram_used} <Text style={styles.vramUnit}>GB</Text> /{" "}
-          {data.gpu_vram_total} <Text style={styles.vramUnit}>GB</Text>
+          {Number(data.gpu_vram_used).toFixed(2)} <Text style={styles.vramUnit}>GB</Text> /{" "}
+          {Number(data.gpu_vram_total).toFixed(2)} <Text style={styles.vramUnit}>GB</Text>
         </Text>
       </View>
     </View>

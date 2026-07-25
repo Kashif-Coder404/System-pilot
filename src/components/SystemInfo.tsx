@@ -21,7 +21,7 @@ const SystemInfo = () => {
       <StatusBar hidden={isFullScreen} />
       <Ionicons name="time-outline" size={14} color="#38BDF8" />
       <Text style={styles.valueText}>
-        System Uptime: <Text style={styles.highlight}>{data.uptime_hours}</Text>{" "}
+        System Uptime: <Text style={styles.highlight}>{Number(data.uptime_hours).toFixed(2)}</Text>{" "}
         hours
       </Text>
       <View style={{ marginLeft: "auto", flexDirection: "row", gap: 20 }}>
